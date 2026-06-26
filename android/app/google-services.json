@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "419283776231",
+    "project_id": "naqel-a9ec0",
+    "storage_bucket": "naqel-a9ec0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419283776231:android:05f716c61c2a82b264e842",
+        "android_client_info": {
+          "package_name": "com.example.naqel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPvkAhPttDY9KW4kI43Ct6PYtpnuPYa98"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
