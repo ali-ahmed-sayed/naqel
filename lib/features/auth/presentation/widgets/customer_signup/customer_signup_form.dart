@@ -230,6 +230,7 @@ class _CustomerSignupFormState extends State<CustomerSignupForm> {
                     _agreeToTerms) {
                   // Bind layout state values straight to your respective Cubit here
                   cubit.signUp();
+                  context.go('/customer-home');
                 } else {
                   showDialog(
                     context: context,
@@ -256,7 +257,7 @@ class _CustomerSignupFormState extends State<CustomerSignupForm> {
                                 ),
                               ),
                               onPressed: () {
-                                GoRouter.of(context).pop();
+                                context.pop();
                               },
                               child: Text('OK'),
                             ),
@@ -301,7 +302,7 @@ class _CustomerSignupFormState extends State<CustomerSignupForm> {
                 ),
               ),
               GestureDetector(
-                onTap: () => GoRouter.of(context).go('/loginq'),
+                onTap: () => context.go('/login'),
                 child: Text(
                   'Login',
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(

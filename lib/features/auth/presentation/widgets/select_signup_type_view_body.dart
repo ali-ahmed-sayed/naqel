@@ -6,7 +6,7 @@ import 'package:naqel/features/auth/presentation/widgets/select_signup_type_widg
 import 'package:naqel/features/auth/presentation/widgets/signup_header_widget.dart';
 
 class SelectSignupTypeViewBody extends StatefulWidget {
-  SelectSignupTypeViewBody({super.key});
+  const SelectSignupTypeViewBody({super.key});
 
   @override
   State<SelectSignupTypeViewBody> createState() =>
@@ -50,10 +50,10 @@ class _SelectSignupTypeViewBodyState extends State<SelectSignupTypeViewBody> {
                       onPressed: () {
                         if (_selectedType == 'customer') {
                           // Navigate to customer signup page
-                          GoRouter.of(context).push('/customer-signup');
+                          context.push('/customer-signup');
                         } else if (_selectedType == 'driver') {
                           // Navigate to driver signup page
-                          GoRouter.of(context).push('/driver-signup');
+                          context.push('/driver-signup');
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -92,4 +92,3 @@ class _SelectSignupTypeViewBodyState extends State<SelectSignupTypeViewBody> {
     );
   }
 }
-

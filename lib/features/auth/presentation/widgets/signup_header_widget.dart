@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:naqel/core/widgets/logo.dart';
 
 class SignupHeaderWidget extends StatelessWidget {
@@ -12,7 +13,7 @@ class SignupHeaderWidget extends StatelessWidget {
         children: [
           IconButton(
             icon: const Icon(Icons.arrow_back, color: Color(0xFF0047FF)),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => context.pop(),
           ),
           const SizedBox(width: 8),
           const Logo(),

@@ -33,7 +33,7 @@ class LoginBottom extends StatelessWidget {
           height: 55,
           child: TextButton(
             onPressed: () {
-              GoRouter.of(context).push('/select-signup-type');
+              context.push('/select-signup-type');
             },
             style: TextButton.styleFrom(
               backgroundColor: const Color(0xFFEBE7E7),

@@ -1,8 +1,9 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:naqel/features/auth/data/models/user_model.dart';
+import 'package:naqel/features/auth/presentation/bloc/application_status_state.dart';
 import 'package:naqel/features/auth/presentation/bloc/login_cubit.dart';
 
 class LoginForm extends StatefulWidget {
@@ -153,70 +154,86 @@ class _LoginFormState extends State<LoginForm> {
                 ).createShader(bounds);
               },
               blendMode: BlendMode.dstIn,
-              child: ElevatedButton(
-                onPressed: () {
-                  final validation = _formKey.currentState?.validate();
-                  if (validation ?? false) {
-                    cubit.login();
-                  } else {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Dialog(
-                          constraints: BoxConstraints(
-                            maxWidth: 300,
-                            maxHeight: 200,
-                          ),
-                          child: AlertDialog(
-                            insetPadding: EdgeInsets.all(4.0),
-                            title: Text('Invalid Input'),
-                            content: Wrap(
-                              children: [
-                                Text('Please fill in all fields correctly.'),
-                              ],
-                            ),
-                            actionsAlignment: .center,
-                            actions: [
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      WidgetStateProperty.all<Color>(
-                                        Theme.of(context).colorScheme.error,
-                                      ),
-                                ),
-                                onPressed: () {
-                                  GoRouter.of(context).pop();
-                                },
-                                child: Text('OK'),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                    log('validation failed');
+              child: BlocListener<LoginCubit, LoginState>(
+                listener: (context, state) {
+                  log("State: ${state.runtimeType}");
+                  if (state is LoginSuccess) {
+                    final targetRoute = state.user is CustomerModel
+                        ? '/customer-home'
+                        : ((state.user as DriverModel).applicationStatus ==
+                                  ApplicationStatus.Activated
+                              ? "/driver-dashboard"
+                              : "/application-status");
+
+                    context.go(targetRoute, extra: state.user);
                   }
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF0047FF),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  elevation: 10,
-                  shadowColor: const Color(
-                    0xFF0047FF,
-                  ).withAlpha((0.4 * 255).floor()),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Login to Dashboard',
-                      style: Theme.of(context).textTheme.titleMedium,
+                child: ElevatedButton(
+                  onPressed: () {
+                    final validation = _formKey.currentState?.validate();
+                    if (validation ?? false) {
+                      log("Started Login");
+                      cubit.login();
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                            constraints: BoxConstraints(
+                              maxWidth: 300,
+                              maxHeight: 200,
+                            ),
+                            child: AlertDialog(
+                              insetPadding: EdgeInsets.all(4.0),
+                              title: Text('Invalid Input'),
+                              content: Wrap(
+                                children: [
+                                  Text('Please fill in all fields correctly.'),
+                                ],
+                              ),
+                              actionsAlignment: .center,
+                              actions: [
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        WidgetStateProperty.all<Color>(
+                                          Theme.of(context).colorScheme.error,
+                                        ),
+                                  ),
+                                  onPressed: () {
+                                    context.pop();
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                      log('validation failed');
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF0047FF),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                    SizedBox(width: 10),
-                    Icon(Icons.arrow_forward, color: Colors.white),
-                  ],
+                    elevation: 10,
+                    shadowColor: const Color(
+                      0xFF0047FF,
+                    ).withAlpha((0.4 * 255).floor()),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Login to Dashboard',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      SizedBox(width: 10),
+                      Icon(Icons.arrow_forward, color: Colors.white),
+                    ],
+                  ),
                 ),
               ),
             ),

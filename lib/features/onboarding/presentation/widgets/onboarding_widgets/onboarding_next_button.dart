@@ -15,7 +15,7 @@ class OnboardingNextButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {
           sl<SetOnboardingDoneUseCase>().call(NoParams());
-          GoRouter.of(context).pushReplacement('/login');
+          context.pushReplacement('/login');
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
+
+enum VehicleType { car, truck, motorcycle }
 
 @immutable
 class DriverSignupParams {
@@ -17,24 +19,43 @@ class DriverSignupParams {
   final XFile? backLicenseImagePath;
   final XFile? frontIdImagePath;
   final XFile? backIdImagePath;
+  final agreeToTerms;
 
   const DriverSignupParams({
-    required this.email,
-    required this.password,
-    required this.name,
-    required this.phone,
+    this.name = '',
+    this.email = '',
+    this.phone = '',
+    this.password = '',
     this.driverImagePath,
-    required this.vehicleType,
-    required this.vehicleModel,
-    required this.plateNumber,
-    required this.frontPlateImagePath,
-    required this.backPlateImagePath,
-    required this.frontLicenseImagePath,
-    required this.backLicenseImagePath,
-    required this.frontIdImagePath,
-    required this.backIdImagePath,
+    this.vehicleType = VehicleType.car,
+    this.vehicleModel = '',
+    this.plateNumber = '',
+    this.frontPlateImagePath,
+    this.backPlateImagePath,
+    this.frontLicenseImagePath,
+    this.backLicenseImagePath,
+    this.frontIdImagePath,
+    this.backIdImagePath,
+    this.agreeToTerms = false,
   });
 
+  /// Initial factory constructor
+  factory DriverSignupParams.initial() => const DriverSignupParams();
+
+  /// Map representation for sending data/form data to API/Firestore
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'vehicleType':
+          vehicleType.name, // Converts enum to string: 'car', 'truck', etc.
+      'vehicleModel': vehicleModel,
+      'plateNumber': plateNumber,
+    };
+  }
+
+  /// CopyWith support that allows setting null values using ValueGetter / Function wrapper
   DriverSignupParams copyWith({
     String? name,
     String? email,
@@ -50,6 +71,7 @@ class DriverSignupParams {
     XFile? backLicenseImagePath,
     XFile? frontIdImagePath,
     XFile? backIdImagePath,
+    bool? agreeToTerms,
   }) {
     return DriverSignupParams(
       name: name ?? this.name,
@@ -67,8 +89,7 @@ class DriverSignupParams {
       backLicenseImagePath: backLicenseImagePath ?? this.backLicenseImagePath,
       frontIdImagePath: frontIdImagePath ?? this.frontIdImagePath,
       backIdImagePath: backIdImagePath ?? this.backIdImagePath,
+      agreeToTerms: agreeToTerms ?? this.agreeToTerms,
     );
   }
 }
-
-enum VehicleType { car, truck, motorcycle }

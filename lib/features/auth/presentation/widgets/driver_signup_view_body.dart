@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:naqel/core/theme/SwiftShip_theme.dart';
 import 'package:naqel/features/auth/presentation/bloc/driver_cubit.dart';
 import 'package:naqel/features/auth/presentation/widgets/driver_signup/driver_signup_navigation_bar.dart';
@@ -40,7 +41,7 @@ class _DriverSignupViewBodyState extends State<DriverSignupViewBody> {
 
   void _onBack() {
     if (_currentStep == 0) {
-      Navigator.of(context).pop();
+      context.pop();
       return;
     }
     _goToStep(_currentStep - 1);
@@ -49,7 +50,7 @@ class _DriverSignupViewBodyState extends State<DriverSignupViewBody> {
   void _onContinue() {
     if (_currentStep == _totalSteps - 1) {
       final cubit = context.read<DriverSignupCubit>();
-      if (cubit.state.agreeToTerms &&
+      if (cubit.state.params.agreeToTerms &&
           cubit.state.params.name.isNotEmpty &&
           cubit.state.params.email.isNotEmpty &&
           cubit.state.params.phone.isNotEmpty &&
@@ -72,7 +73,7 @@ class _DriverSignupViewBodyState extends State<DriverSignupViewBody> {
             content: Text('Please fill in all fields correctly.'),
             actions: [
               ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () => context.pop(),
                 child: Text('OK'),
               ),
             ],
@@ -86,53 +87,68 @@ class _DriverSignupViewBodyState extends State<DriverSignupViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: SwiftShipTheme.primaryBlue),
-          onPressed: _onBack,
-        ),
-        centerTitle: true,
-        title: Text(
-          'Driver Registration',
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontSize: 18,
-            color: const Color(0xFF1C1B1B),
+    return BlocListener<DriverSignupCubit, DriverSignupState>(
+      listener: (context, state) {
+        if (state.status == DriverSignupStatus.success) {
+          context.go('/application-status', extra: state.user);
+        } else if (state.status == DriverSignupStatus.failure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.errorMessage ?? 'Signup failed')),
+          );
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: SwiftShipTheme.primaryBlue,
+            ),
+            onPressed: _onBack,
           ),
-        ),
-      ),
-      body: Column(
-        children: [
-          DriverSignupProgressHeader(currentStep: _currentStep),
-          Expanded(
-            child: PageView(
-              controller: _pageController,
-              physics: const NeverScrollableScrollPhysics(),
-              onPageChanged: (index) => setState(() => _currentStep = index),
-              children: [
-                const PersonalInfoStep(),
-                const VehicleInfoStep(),
-                const VehicleImagesStep(),
-                const IdentityVerificationStep(),
-                ReviewApplicationStep(onEditStep: _goToStep),
-              ],
+          centerTitle: true,
+          title: Text(
+            'Driver Registration',
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              fontSize: 18,
+              color: const Color(0xFF1C1B1B),
             ),
           ),
-          BlocBuilder<DriverSignupCubit, DriverSignupState>(
-            buildWhen: (prev, curr) => prev.agreeToTerms != curr.agreeToTerms,
-            builder: (context, state) {
-              final isLastStep = _currentStep == _totalSteps - 1;
-              return DriverSignupNavigationBar(
-                onBack: _onBack,
-                onContinue: _onContinue,
-                isLastStep: isLastStep,
-                isContinueEnabled: !isLastStep || state.agreeToTerms,
-              );
-            },
-          ),
-        ],
+        ),
+        body: Column(
+          children: [
+            DriverSignupProgressHeader(currentStep: _currentStep),
+            Expanded(
+              child: PageView(
+                controller: _pageController,
+                physics: const NeverScrollableScrollPhysics(),
+                onPageChanged: (index) => setState(() => _currentStep = index),
+                children: [
+                  const PersonalInfoStep(),
+                  const VehicleInfoStep(),
+                  const VehicleImagesStep(),
+                  const IdentityVerificationStep(),
+                  ReviewApplicationStep(onEditStep: _goToStep),
+                ],
+              ),
+            ),
+            BlocBuilder<DriverSignupCubit, DriverSignupState>(
+              buildWhen: (prev, curr) =>
+                  prev.params.agreeToTerms != curr.params.agreeToTerms,
+              builder: (context, state) {
+                final isLastStep = _currentStep == _totalSteps - 1;
+                return DriverSignupNavigationBar(
+                  onBack: _onBack,
+                  onContinue: _onContinue,
+                  isLastStep: isLastStep,
+                  isContinueEnabled: !isLastStep || state.params.agreeToTerms,
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

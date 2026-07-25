@@ -115,7 +115,7 @@ class ReviewApplicationStep extends StatelessWidget {
                       width: 24,
                       height: 24,
                       child: Checkbox(
-                        value: state.agreeToTerms,
+                        value: state.params.agreeToTerms,
                         fillColor: WidgetStateProperty.fromMap(
                           <WidgetStatesConstraint, Color?>{
                             WidgetState.selected: SwiftShipTheme.primaryBlue,

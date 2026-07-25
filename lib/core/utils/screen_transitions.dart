@@ -8,7 +8,7 @@ Widget slideTransition(
 ) {
   return SlideTransition(
     position: Tween<Offset>(
-      begin: const Offset(1.0, 0.0),
+      begin: const Offset(0.0, 0.0),
       end: Offset.zero,
     ).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOut)),
     child: child,

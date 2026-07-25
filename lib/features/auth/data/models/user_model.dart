@@ -1,6 +1,8 @@
 // user_model.dart
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:naqel/features/auth/domain/entities/user_entity.dart';
+import 'package:naqel/features/auth/presentation/bloc/application_status_state.dart';
 
 abstract class UserModel extends UserEntity {
   UserModel({
@@ -12,9 +14,18 @@ abstract class UserModel extends UserEntity {
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
-    final role = json['role'];
-    if (role == 'driver') return DriverModel.fromJson(json);
+    final role = json['role'] as String? ?? '';
+    if (role == 'driver') {
+      return DriverModel.fromJson(json);
+    }
     return CustomerModel.fromJson(json);
+  }
+
+  /// Helper to safely extract Firestore Timestamp
+  static Timestamp _parseTimestamp(dynamic value) {
+    if (value is Timestamp) return value;
+    if (value is DateTime) return Timestamp.fromDate(value);
+    return Timestamp.now();
   }
 }
 
@@ -32,12 +43,13 @@ class CustomerModel extends UserModel {
 
   factory CustomerModel.fromJson(Map<String, dynamic> json) {
     return CustomerModel(
-      id: json['id'],
-      name: json['name'],
-      phone: json['phone'],
-      email: json['email'],
-      createdAt: json['createdAt'],
-      customerId: json['customerId'],
+      id: json['id'] as String? ?? '',
+      name: json['name'] as String? ?? '',
+      phone: json['phone'] as String? ?? '',
+      email: json['email'] as String? ?? '',
+      createdAt: UserModel._parseTimestamp(json['createdAt']),
+      // Fallback to 'id' or 'driverId' if customerId isn't present in payload
+      customerId: (json['customerId'] ?? json['id'] ?? '') as String,
     );
   }
 }
@@ -52,7 +64,7 @@ class DriverModel extends UserModel {
     required this.driverId,
     required this.vehicleTypeId,
     required this.isAvailable,
-    required this.isApproved,
+    required this.applicationStatus,
     required this.rating,
     this.lat,
     this.lng,
@@ -61,23 +73,40 @@ class DriverModel extends UserModel {
   final String driverId;
   final int vehicleTypeId;
   final bool isAvailable;
-  final bool isApproved;
+  final ApplicationStatus applicationStatus;
   final double rating;
   final double? lat;
   final double? lng;
 
-  factory DriverModel.fromJson(Map<String, dynamic> json) => DriverModel(
-    id: json['id'],
-    name: json['name'],
-    phone: json['phone'],
-    email: json['email'],
-    createdAt: json['createdAt'],
-    driverId: json['driverId'],
-    vehicleTypeId: json['vehicleTypeId'],
-    isAvailable: json['isAvailable'],
-    isApproved: json['isApproved'],
-    rating: (json['rating'] as num).toDouble(),
-    lat: json['lat']?.toDouble(),
-    lng: json['lon']?.toDouble(),
-  );
+  factory DriverModel.fromJson(Map<String, dynamic> json) {
+    return DriverModel(
+      id: json['id'] as String? ?? '',
+      name: json['name'] as String? ?? '',
+      phone: json['phone'] as String? ?? '',
+      email: json['email'] as String? ?? '',
+      createdAt: UserModel._parseTimestamp(json['createdAt']),
+      driverId: json['driverId'] as String? ?? json['id'] as String? ?? '',
+      vehicleTypeId: (json['vehicleTypeId'] as num?)?.toInt() ?? 0,
+      isAvailable: json['isAvailable'] as bool? ?? false,
+      applicationStatus: to_status((json['applicationStatus'] as String?)),
+      rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
+      lat: (json['lat'] as num?)?.toDouble(),
+      lng: (json['lng'] ?? json['lon'] as num?)?.toDouble(),
+    );
+  }
+}
+
+ApplicationStatus to_status(String? applicationStatus) {
+  switch (applicationStatus) {
+    case "Submitted":
+      return ApplicationStatus.Submitted;
+    case "Verified":
+      return ApplicationStatus.Verified;
+    case "Checked":
+      return ApplicationStatus.Checked;
+    case "Activated":
+      return ApplicationStatus.Activated;
+    default:
+      return ApplicationStatus.Submitted;
+  }
 }
