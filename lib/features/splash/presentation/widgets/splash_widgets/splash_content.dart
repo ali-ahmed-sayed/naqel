@@ -14,7 +14,7 @@ class SplashContent extends StatelessWidget {
           !previous.isDone && current.isDone && current.hasInternet,
       listener: (context, state) {
         if (state.onboardingStatus) {
-          context.pushReplacement('/login');
+          context.pushReplacement('/onboarding');
         } else {
           context.pushReplacement('/onboarding');
         }

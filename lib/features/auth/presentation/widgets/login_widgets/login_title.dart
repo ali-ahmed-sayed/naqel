@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-import 'package:naqel/core/widgets/logo.dart';
 
 class LoginTitle extends StatelessWidget {
   const LoginTitle({super.key});
@@ -10,9 +8,6 @@ class LoginTitle extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // Logo
-        const Logo(),
-        const SizedBox(height: 40),
         // Header Text
         Text(
           'WELCOME BACK',

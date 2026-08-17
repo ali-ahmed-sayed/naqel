@@ -21,73 +21,71 @@ class _SelectSignupTypeViewBodyState extends State<SelectSignupTypeViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Screen Header
-            SignupHeaderWidget(),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 32.0,
-                vertical: 16.0,
-              ),
-              child: Column(
-                children: [
-                  // Title Block
-                  SelectSignupTypeTitle(),
-                  SelectSignupTypeBody(
-                    selectedType: _selectedType,
-                    customerCallback: customerCallback,
-                    driverCallback: driverCallback,
-                  ),
-                  // Signup Forms Button
-                  SizedBox(
-                    width: double.infinity,
-                    height: 55,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_selectedType == 'customer') {
-                          // Navigate to customer signup page
-                          context.push('/customer-signup');
-                        } else if (_selectedType == 'driver') {
-                          // Navigate to driver signup page
-                          context.push('/driver-signup');
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF0047FF),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Screen Header
+          SignupHeaderWidget(),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 32.0,
+              vertical: 16.0,
+            ),
+            child: Column(
+              children: [
+                // Title Block
+                SelectSignupTypeTitle(),
+                SelectSignupTypeBody(
+                  selectedType: _selectedType,
+                  customerCallback: customerCallback,
+                  driverCallback: driverCallback,
+                ),
+                // Signup Forms Button
+                SizedBox(
+                  width: double.infinity,
+                  height: 55,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_selectedType == 'customer') {
+                        // Navigate to customer signup page
+                        context.push('/customer-signup');
+                      } else if (_selectedType == 'driver') {
+                        // Navigate to driver signup page
+                        context.push('/driver-signup');
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF0047FF),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      elevation: 10,
+                      shadowColor: const Color(
+                        0xFF0047FF,
+                      ).withAlpha((0.4 * 255).floor()),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Continue',
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
-                        elevation: 10,
-                        shadowColor: const Color(
-                          0xFF0047FF,
-                        ).withAlpha((0.4 * 255).floor()),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Continue',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          const SizedBox(width: 10),
-                          const Icon(Icons.arrow_forward, color: Colors.white),
-                        ],
-                      ),
+                        const SizedBox(width: 10),
+                        const Icon(Icons.arrow_forward, color: Colors.white),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 24),
-                  // Legal/Terms Text Link
-                  SelectSignupTypeFooter(),
-                  const SizedBox(height: 20),
-                ],
-              ),
+                ),
+                const SizedBox(height: 24),
+                // Legal/Terms Text Link
+                SelectSignupTypeFooter(),
+                const SizedBox(height: 20),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

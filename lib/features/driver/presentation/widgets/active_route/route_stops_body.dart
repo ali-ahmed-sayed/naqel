@@ -95,20 +95,17 @@ class RouteStopsBody extends StatelessWidget {
             ],
           ),
         ),
-        SafeArea(
-          top: false,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
-            child: ElevatedButton(
-              onPressed: cubit.primaryActionPressed,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.check_circle, size: 20),
-                  const SizedBox(width: 8),
-                  Text(buttonLabel),
-                ],
-              ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
+          child: ElevatedButton(
+            onPressed: cubit.primaryActionPressed,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.check_circle, size: 20),
+                const SizedBox(width: 8),
+                Text(buttonLabel),
+              ],
             ),
           ),
         ),

@@ -6,8 +6,8 @@ import 'package:naqel/core/theme/SwiftShip_theme.dart';
 import 'package:naqel/features/driver/presentation/cubit/payment_method_cubit.dart';
 import 'package:naqel/features/driver/presentation/cubit/payment_method_state.dart';
 
-class PaymentMethodBody extends StatelessWidget {
-  const PaymentMethodBody({super.key});
+class PaymentMethodViewBody extends StatelessWidget {
+  const PaymentMethodViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {

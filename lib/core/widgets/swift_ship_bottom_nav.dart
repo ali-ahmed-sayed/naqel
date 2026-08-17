@@ -13,45 +13,43 @@ class SwiftShipBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(24, 8, 24, 12),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          decoration: BoxDecoration(
-            color: SwiftShipTheme.surfaceWhite,
-            borderRadius: BorderRadius.circular(SwiftShipTheme.radiusFull),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.08),
-                blurRadius: 16,
-                offset: const Offset(0, 6),
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _NavItem(
-                icon: Icons.home_rounded,
-                label: 'HOME',
-                selected: activeTab == SwiftShipTab.home,
-                onTap: () => onTap?.call(SwiftShipTab.home),
-              ),
-              _NavItem(
-                icon: Icons.history_rounded,
-                label: 'HISTORY',
-                selected: activeTab == SwiftShipTab.history,
-                onTap: () => onTap?.call(SwiftShipTab.history),
-              ),
-              _NavItem(
-                icon: Icons.person_rounded,
-                label: 'PROFILE',
-                selected: activeTab == SwiftShipTab.profile,
-                onTap: () => onTap?.call(SwiftShipTab.profile),
-              ),
-            ],
-          ),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 8, 24, 12),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: SwiftShipTheme.surfaceWhite,
+          borderRadius: BorderRadius.circular(SwiftShipTheme.radiusFull),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.08),
+              blurRadius: 16,
+              offset: const Offset(0, 6),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _NavItem(
+              icon: Icons.home_rounded,
+              label: 'HOME',
+              selected: activeTab == SwiftShipTab.home,
+              onTap: () => onTap?.call(SwiftShipTab.home),
+            ),
+            _NavItem(
+              icon: Icons.history_rounded,
+              label: 'HISTORY',
+              selected: activeTab == SwiftShipTab.history,
+              onTap: () => onTap?.call(SwiftShipTab.history),
+            ),
+            _NavItem(
+              icon: Icons.person_rounded,
+              label: 'PROFILE',
+              selected: activeTab == SwiftShipTab.profile,
+              onTap: () => onTap?.call(SwiftShipTab.profile),
+            ),
+          ],
         ),
       ),
     );

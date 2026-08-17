@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naqel/core/theme/SwiftShip_theme.dart';
 
-class PaymentStatusBody extends StatelessWidget {
-  const PaymentStatusBody({super.key});
+class PaymentStatusViewBody extends StatelessWidget {
+  const PaymentStatusViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {

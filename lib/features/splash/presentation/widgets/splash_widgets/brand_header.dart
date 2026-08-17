@@ -12,12 +12,7 @@ class BrandHeader extends StatelessWidget {
           text: TextSpan(
             children: [
               TextSpan(
-                text: "Switch",
-                style: Theme.of(context).textTheme.displayLarge,
-              ),
-              TextSpan(text: " ", style: TextStyle(fontSize: 4)),
-              TextSpan(
-                text: "Ship",
+                text: "Naqel",
                 style: Theme.of(context).textTheme.displayLarge?.copyWith(
                   color: Theme.of(context).primaryColor,
                 ),

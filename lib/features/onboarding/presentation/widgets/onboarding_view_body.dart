@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:naqel/features/onboarding/presentation/widgets/onboarding_widgets/onboarding_brand.dart';
 import 'package:naqel/features/onboarding/presentation/widgets/onboarding_widgets/onboarding_data.dart';
-import 'package:naqel/features/onboarding/presentation/widgets/onboarding_widgets/onboarding_header.dart';
 import 'package:naqel/features/onboarding/presentation/widgets/onboarding_widgets/onboarding_image.dart';
 import 'package:naqel/features/onboarding/presentation/widgets/onboarding_widgets/onboarding_next_button.dart';
 
@@ -15,7 +14,6 @@ class OnboardingViewBody extends StatelessWidget {
       child: Column(
         crossAxisAlignment: .stretch,
         children: [
-          const OnboardingHeader(),
           const OnboardingImage(),
           SizedBox(height: 16),
           const OnboardingData(),
@@ -28,4 +26,3 @@ class OnboardingViewBody extends StatelessWidget {
     );
   }
 }
-

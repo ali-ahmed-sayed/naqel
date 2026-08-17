@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:naqel/core/theme/SwiftShip_theme.dart';
+import 'package:naqel/core/widgets/default_appbar.dart';
 import 'package:naqel/core/widgets/swift_ship_bottom_nav.dart';
 import 'package:naqel/features/driver/presentation/widgets/driver_profile_body.dart';
 import 'package:naqel/features/driver/presentation/cubit/driver_profile_cubit.dart';
@@ -13,23 +15,43 @@ class DriverProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => DriverProfileCubit()..loadProfile(),
-      child: Scaffold(
-        extendBody: true,
-        body: DriverProfileBody(),
-        bottomNavigationBar: SwiftShipBottomNav(
-          activeTab: SwiftShipTab.profile,
-          onTap: (tab) {
-            switch (tab) {
-              case SwiftShipTab.home:
-                context.go('/driver-dashboard');
-                break;
-              case SwiftShipTab.history:
-                context.go('/driver-wallet');
-                break;
-              case SwiftShipTab.profile:
-                break;
-            }
-          },
+      child: SafeArea(
+        child: Scaffold(
+          extendBody: true,
+          appBar: defaultAppBar(
+            context,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(
+                    SwiftShipTheme.radiusFull,
+                  ),
+                  onTap: () => context.push('/settings'),
+                  child: Padding(
+                    padding: EdgeInsets.all(SwiftShipTheme.spacingSm),
+                    child: Icon(Icons.settings, size: SwiftShipTheme.spacingXl),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          body: DriverProfileBody(),
+          bottomNavigationBar: SwiftShipBottomNav(
+            activeTab: SwiftShipTab.profile,
+            onTap: (tab) {
+              switch (tab) {
+                case SwiftShipTab.home:
+                  context.go('/driver-dashboard');
+                  break;
+                case SwiftShipTab.history:
+                  context.go('/driver-wallet');
+                  break;
+                case SwiftShipTab.profile:
+                  break;
+              }
+            },
+          ),
         ),
       ),
     );

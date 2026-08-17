@@ -23,7 +23,7 @@ class ApplicationStatusView extends StatelessWidget {
     return BlocProvider(
       create: (_) =>
           ApplicationStatusCubit(applicationStatus: applicationStatus),
-      child: const Scaffold(body: SafeArea(child: ApplicationStatusViewBody())),
+      child: SafeArea(child: const Scaffold(body: ApplicationStatusViewBody())),
     );
   }
 }

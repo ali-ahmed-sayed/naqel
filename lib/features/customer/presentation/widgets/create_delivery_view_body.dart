@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:naqel/core/theme/SwiftShip_theme.dart';
 import 'package:naqel/features/customer/presentation/widgets/create_delivery/field_card.dart';
 import 'package:naqel/features/customer/presentation/cubit/create_delivery_cubit.dart';
@@ -11,22 +10,7 @@ class CreateDeliveryViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: BackButton(
-          color: SwiftShipTheme.primaryBlue,
-          onPressed: () => context.go("customer-home"),
-        ),
-        title: Text(
-          'SwiftShip',
-          style: Theme.of(
-            context,
-          ).textTheme.titleLarge?.copyWith(color: SwiftShipTheme.primaryBlue),
-        ),
-      ),
-      body: BlocBuilder<CreateDeliveryCubit, CreateDeliveryState>(
+    return BlocBuilder<CreateDeliveryCubit, CreateDeliveryState>(
         builder: (context, state) {
           final cubit = context.read<CreateDeliveryCubit>();
           return ListView(
@@ -307,7 +291,6 @@ class CreateDeliveryViewBody extends StatelessWidget {
             ],
           );
         },
-      ),
-    );
+      );
   }
 }

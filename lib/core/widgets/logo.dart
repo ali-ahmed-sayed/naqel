@@ -6,7 +6,7 @@ class Logo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      "SwiftShip",
+      "Naqel",
       style: Theme.of(context).textTheme.headlineMedium?.copyWith(
         color: Theme.of(context).primaryColor,
         letterSpacing: -1.2,

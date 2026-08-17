@@ -16,25 +16,6 @@ class DriverProfileBody extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'SwiftShip',
-                style: theme.textTheme.headlineLarge?.copyWith(
-                  color: SwiftShipTheme.primaryBlue,
-                ),
-              ),
-              InkWell(
-                borderRadius: BorderRadius.circular(SwiftShipTheme.radiusFull),
-                onTap: () => context.push('/settings'),
-                child: Padding(
-                  padding: EdgeInsets.all(SwiftShipTheme.spacingSm),
-                  child: Icon(Icons.settings, size: SwiftShipTheme.spacingXl),
-                ),
-              ),
-            ],
-          ),
           const SizedBox(height: SwiftShipTheme.spacingXl),
           Center(
             child: Column(

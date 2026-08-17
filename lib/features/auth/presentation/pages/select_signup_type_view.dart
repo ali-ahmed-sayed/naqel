@@ -6,9 +6,11 @@ class SelectSignupTypeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFFF9F9FB),
-      body: SafeArea(child: SelectSignupTypeViewBody()),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Color(0xFFF9F9FB),
+        body: SelectSignupTypeViewBody(),
+      ),
     );
   }
 }

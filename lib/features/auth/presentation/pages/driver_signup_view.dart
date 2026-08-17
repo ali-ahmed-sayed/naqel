@@ -6,6 +6,6 @@ class DriverSignupView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const DriverSignupViewBody();
+    return SafeArea(child: const DriverSignupViewBody());
   }
 }

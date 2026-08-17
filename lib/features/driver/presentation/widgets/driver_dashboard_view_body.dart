@@ -26,80 +26,60 @@ class _DriverDashboardViewBodyState extends State<DriverDashboardViewBody> {
         Positioned.fill(
           child: Image.asset("assets/Images/map_placeholder.png", fit: .cover),
         ),
-        SafeArea(
-          child: BlocBuilder<DriverDashboardCubit, DriverDashboardState>(
-            builder: (context, state) {
-              final cubit = context.read<DriverDashboardCubit>();
-              return Column(
-                children: [
-                  Container(
-                    color: SwiftShipTheme.backgroundColor.withAlpha(150),
-                    padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'SwiftShip',
-                          style: Theme.of(context).textTheme.titleLarge
-                              ?.copyWith(color: SwiftShipTheme.primaryBlue),
+        BlocBuilder<DriverDashboardCubit, DriverDashboardState>(
+          builder: (context, state) {
+            final cubit = context.read<DriverDashboardCubit>();
+            return Column(
+              children: [
+                state.isLowBalance
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
                         ),
-                        const CircleAvatar(
-                          radius: 18,
-                          backgroundColor: Colors.black26,
+                        child: LowBalanceBanner(
+                          balance: state.walletBalance,
+                          threshold: state.lowBalanceThreshold,
+                          onRecharge: () {
+                            cubit.openWallet();
+                            context.go('/driver-wallet');
+                          },
                         ),
-                      ],
-                    ),
+                      )
+                    : const SizedBox(height: 12),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: AvailabilityToggle(
+                    isOnline: state.isOnline,
+                    onChanged: (_) => cubit.toggleAvailability(),
                   ),
-                  state.isLowBalance
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 10,
-                          ),
-                          child: LowBalanceBanner(
-                            balance: state.walletBalance,
-                            threshold: state.lowBalanceThreshold,
-                            onRecharge: () {
-                              cubit.openWallet();
-                              context.go('/driver-wallet');
+                ),
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      ...state.activeOrders.map(
+                        (order) => Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: ActiveOrderCard(
+                            order: order,
+                            onTap: () {
+                              cubit.openActiveOrder(order.orderId);
+                              context.push('/active-route');
                             },
                           ),
-                        )
-                      : const SizedBox(height: 12),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: AvailabilityToggle(
-                      isOnline: state.isOnline,
-                      onChanged: (_) => cubit.toggleAvailability(),
-                    ),
-                  ),
-                  const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        ...state.activeOrders.map(
-                          (order) => Padding(
-                            padding: const EdgeInsets.only(bottom: 12),
-                            child: ActiveOrderCard(
-                              order: order,
-                              onTap: () {
-                                cubit.openActiveOrder(order.orderId);
-                                context.push('/active-route');
-                              },
-                            ),
-                          ),
                         ),
-                        EarningsSummaryCard(state: state),
-                      ],
-                    ),
+                      ),
+                      EarningsSummaryCard(state: state),
+                    ],
                   ),
-                  const SizedBox(height: 12),
-                ],
-              );
-            },
-          ),
+                ),
+                const SizedBox(height: 96),
+              ],
+            );
+          },
         ),
       ],
     );

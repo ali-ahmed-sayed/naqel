@@ -97,47 +97,44 @@ class OtpVerificationBody extends StatelessWidget {
             ),
           ),
         ),
-        SafeArea(
-          top: false,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
-            child: Column(
-              children: [
-                ElevatedButton(
-                  onPressed: state.otpComplete && !state.isSubmittingOtp
-                      ? cubit.submitOtp
-                      : null,
-                  child: state.isSubmittingOtp
-                      ? const SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.check_circle, size: 20),
-                            SizedBox(width: 8),
-                            Text('Accept'),
-                          ],
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+          child: Column(
+            children: [
+              ElevatedButton(
+                onPressed: state.otpComplete && !state.isSubmittingOtp
+                    ? cubit.submitOtp
+                    : null,
+                child: state.isSubmittingOtp
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
                         ),
-                ),
-                const SizedBox(height: 12),
-                TextButton(
-                  onPressed: cubit.reportOtpTrouble,
-                  child: const Text(
-                    'Having trouble with OTP?',
-                    style: TextStyle(
-                      color: Colors.black54,
-                      decoration: TextDecoration.underline,
-                    ),
+                      )
+                    : const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.check_circle, size: 20),
+                          SizedBox(width: 8),
+                          Text('Accept'),
+                        ],
+                      ),
+              ),
+              const SizedBox(height: 12),
+              TextButton(
+                onPressed: cubit.reportOtpTrouble,
+                child: const Text(
+                  'Having trouble with OTP?',
+                  style: TextStyle(
+                    color: Colors.black54,
+                    decoration: TextDecoration.underline,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],

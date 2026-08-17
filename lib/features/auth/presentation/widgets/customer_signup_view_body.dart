@@ -8,23 +8,20 @@ class CustomerSignupViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // header
-            const SignupHeaderWidget(),
-            // form container
-            CustomerSignupBody(),
-            const SizedBox(height: 32),
-            // Global Footer Branding text
-            BrandFooter(),
-            const SizedBox(height: 24),
-          ],
-        ),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // header
+          const SignupHeaderWidget(),
+          // form container
+          CustomerSignupBody(),
+          const SizedBox(height: 32),
+          // Global Footer Branding text
+          BrandFooter(),
+          const SizedBox(height: 24),
+        ],
       ),
     );
   }
 }
-

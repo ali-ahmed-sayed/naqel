@@ -72,10 +72,7 @@ class _DriverSignupViewBodyState extends State<DriverSignupViewBody> {
             title: Text('Invalid Input'),
             content: Text('Please fill in all fields correctly.'),
             actions: [
-              ElevatedButton(
-                onPressed: () => context.pop(),
-                child: Text('OK'),
-              ),
+              ElevatedButton(onPressed: () => context.pop(), child: Text('OK')),
             ],
           ),
         );
@@ -100,22 +97,9 @@ class _DriverSignupViewBodyState extends State<DriverSignupViewBody> {
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
-          scrolledUnderElevation: 0,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: SwiftShipTheme.primaryBlue,
-            ),
-            onPressed: _onBack,
-          ),
-          centerTitle: true,
-          title: Text(
-            'Driver Registration',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              fontSize: 18,
-              color: const Color(0xFF1C1B1B),
-            ),
-          ),
+          surfaceTintColor: Colors.transparent,
+          leading: BackButton(onPressed: _onBack),
+          title: Text('Driver Registration'),
         ),
         body: Column(
           children: [

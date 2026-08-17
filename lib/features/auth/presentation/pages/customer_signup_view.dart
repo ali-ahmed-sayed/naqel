@@ -6,8 +6,6 @@ class CustomerSignupView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: CustomerSignupViewBody(),
-    );
+    return SafeArea(child: const Scaffold(body: CustomerSignupViewBody()));
   }
 }

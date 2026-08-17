@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:naqel/core/theme/SwiftShip_theme.dart';
+import 'package:naqel/core/widgets/default_appbar.dart';
+import 'package:naqel/core/widgets/logo.dart';
 import 'package:naqel/features/auth/presentation/widgets/driver_signup/application_review_widgets/application_id_card.dart';
 import 'package:naqel/features/auth/presentation/widgets/driver_signup/application_review_widgets/approval_journey_card.dart';
 import 'package:naqel/features/auth/presentation/widgets/driver_signup/application_review_widgets/estimated_time_card.dart';
@@ -12,22 +14,19 @@ class ApplicationReviewView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text(
-          'SwiftShip',
-          style: TextStyle(
-            color: SwiftShipTheme.primaryBlue,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
+    return SafeArea(
+      child: Scaffold(
+        // appBar: AppBar(
+        //   backgroundColor: Colors.transparent,
+        //   elevation: 0,
+        //   title: const Logo(),
+        // ),
+        appBar: defaultAppBar(
+          context,
+          withSpace: false,
+          backgroundColor: Colors.transparent,
         ),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
+        body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,13 +48,17 @@ class ApplicationReviewView extends StatelessWidget {
                   onPressed: () {
                     // Handle support navigation
                   },
-                  icon: const Icon(Icons.headset_mic, color: SwiftShipTheme.primaryBlue, size: 20),
+                  icon: const Icon(
+                    Icons.headset_mic,
+                    color: SwiftShipTheme.primaryBlue,
+                    size: 20,
+                  ),
                   label: Text(
                     'Contact Support',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: SwiftShipTheme.primaryBlue,
-                          fontSize: 16,
-                        ),
+                      color: SwiftShipTheme.primaryBlue,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
